@@ -94,6 +94,7 @@ Vous pouvez utiliser n'importe quel chaine de caractère qui représente une fon
     }
 
 //...
+```
 
 Les filtres sont appliqués dans l'ordre qu'ils sont déclarés ; autrement dit ci-dessus, "stripped" est appliqué, puis "trim", puis "strtolower" et enfin "ucwords".
 
