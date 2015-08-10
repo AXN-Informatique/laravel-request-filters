@@ -49,8 +49,70 @@ class MyRequest extends FormRequest
     use FilterableFormRequest;
 
     protected $sanitizes = [
-        'name' => 'trim|stripped'
+        'name' => 'stripped|trim'
     ];
+
+    //...
 }
+
+```
+
+Les données seront automatiquement filtrées juste avant d'être validées.
+
+Il est possible de passer les noms des filtres à appliquer dans un tableau :
+
+```php
+<?php
+//...
+
+    protected $sanitizes = [
+        'name' => [
+            'stripped',
+            'trim'
+        ]
+    ];
+
+//...
+```
+
+Vous pouvez utiliser n'importe quel chaine de caractère qui représente une fonction de rappel (callable) :
+
+```php
+<?php
+//...
+
+    protected $sanitizes = [
+        'name' => 'stripped|trim|strtolower|ucwords'
+    ];
+
+//...
+
+Les filtres sont appliqués dans l'ordre qu'ils sont déclarés ; autrement dit ci-dessus, "stripped" est appliqué, puis "trim", puis "strtolower" et enfin "ucwords".
+
+Pour rappel, un callable peut être une méthode d'une classe utilisateur :
+
+```php
+<?php
+//...
+
+    protected $sanitizes = [
+        'name' => [
+            'stripped',
+            'trim',
+            'Foo::Bar'
+        ]
+    ];
+
+//...
+
+class Foo
+{
+    public static function Bar($string)
+    {
+        return ucwords($string);
+    }
+}
+
+//...
 
 ```
