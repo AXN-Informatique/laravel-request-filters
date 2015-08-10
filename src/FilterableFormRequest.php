@@ -4,7 +4,15 @@ namespace Axn\RequestFilters;
 
 trait FilterableFormRequest
 {
-    protected $filters = [];
+    /**
+     * Get the filters that apply to the request.
+     *
+     * @return array
+     */
+    public function filters()
+    {
+        return [];
+    }
 
     /**
      * Get the validator instance for the request.
@@ -24,8 +32,8 @@ trait FilterableFormRequest
         {
             $this->replace(
                 Filters::filtering(
-                    $this->filters,
-                    $this->all()
+                    $this->all(),
+                    $this->filters()
                 )
             );
         }

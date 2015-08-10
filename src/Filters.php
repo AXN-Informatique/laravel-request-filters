@@ -9,30 +9,36 @@ class Filters
         'stripped'
     ];
 
-    public static function filtering(array $rules, array $input)
+    /**
+     * Filter $input according with $filters and return filtered $input.
+     *
+     * @param array $input
+     * @param array $filters
+     * @return array
+     */
+    public static function filtering(array $input, array $filters)
     {
-        foreach ($rules as $attribute => $filters)
+        foreach ($filters as $attribute => $filters)
         {
+            if (empty($input[$attribute])) {
+                continue;
+            }
+
             if (is_string($filters)) {
                 $filters = explode('|', $filters);
             }
 
             foreach ($filters as $filter)
             {
-                if (in_array($filter, static::$builtInFilters))
-                {
+                if (in_array($filter, static::$builtInFilters)) {
                     $input[$attribute] = static::applyBuiltInFilter($filter, $input[$attribute]);
                 }
-                elseif (is_callable($filter))
-                {
+                elseif (is_callable($filter)) {
                     $input[$attribute] = call_user_func($filter, $input[$attribute]);
                 }
-                /*
-                elseif ($filter instanceof Closure)
-                {
+                elseif ($filter instanceof Closure) {
                     $input[$attribute] = $filter($input[$attribute]);
                 }
-                */
             }
         }
 

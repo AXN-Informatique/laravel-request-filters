@@ -48,10 +48,12 @@ class MyRequest extends FormRequest
 {
     use FilterableFormRequest;
 
-    protected $filters = [
-        'name' => 'stripped|trim'
-    ];
-
+    public function filters()
+    {
+        return [
+            'name' => 'stripped|trim'
+        ];
+    }
     //...
 }
 
@@ -65,12 +67,15 @@ Il est possible de passer les noms des filtres à appliquer dans un tableau :
 <?php
 //...
 
-    protected $filters = [
-        'name' => [
-            'stripped',
-            'trim'
-        ]
-    ];
+    public function filters()
+    {
+        return [
+            'name' => [
+                'stripped',
+                'trim'
+            ]
+        ];
+    }
 
 //...
 ```
@@ -81,9 +86,12 @@ Vous pouvez utiliser n'importe quel chaine de caractère qui représente une fon
 <?php
 //...
 
-    protected $filters = [
-        'name' => 'stripped|trim|strtolower|ucwords'
-    ];
+    public function filters()
+    {
+        return [
+            'name' => 'stripped|trim|strtolower|ucwords'
+        ];
+    }
 
 //...
 
@@ -95,24 +103,49 @@ Pour rappel, un callable peut être une méthode d'une classe utilisateur :
 <?php
 //...
 
-    protected $filters = [
-        'name' => [
-            'stripped',
-            'trim',
-            'Foo::Bar'
-        ]
-    ];
+    public function filters()
+    {
+        return [
+            'name' => [
+                'stripped',
+                'trim',
+                'Foo::Bar'
+            ]
+        ];
+    }
 
 //...
 
 class Foo
 {
-    public static function Bar($string)
+    public static function Bar($str)
     {
-        return ucwords($string);
+        return ucwords(strtolower($str));
     }
 }
 
 //...
 
+```
+
+Il est également possible de déclarer un filtre dans une closure :
+
+```php
+<?php
+//...
+
+    public function filters()
+    {
+        return [
+            'name' => [
+                'stripped',
+                'trim',
+                function($str) {
+                    return ucwords(strtolower($str));
+                }
+            ]
+        ];
+    }
+
+//...
 ```
