@@ -1,6 +1,13 @@
 # CHANGELOG
 
 
+2.1.0
+-----
+
+- do not encode quote
+- add "strip" filters alias of "stripped"
+- add "url" and "email" filters
+
 2.0.0
 -----
 

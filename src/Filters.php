@@ -49,32 +49,43 @@ class Filters
      * Built in filters
      */
 
-    private static function applyBuiltInFilter($filter, $string)
+    private static function applyBuiltInFilter($filter, $str)
     {
         switch ($filter)
         {
             default:
             case 'trim':
-                return static::trim($string);
+                return static::trim($str);
 
-            case 'stripped':
-                return static::strip($string);
+            case 'strip':
+            case 'stripped': // BC
+                return static::strip($str);
+
+            case 'url':
+                return static::url($str);
         }
     }
 
-    private static function trim($string)
+    private static function trim($str)
     {
-        //$string = trim($string, " \t\n\r\0\x0B&nbsp;");
-        $string = str_replace('&nbsp;', '', $string);
-        $string = trim($string);
+        $str = str_replace('&nbsp;', ' ', $str);
+        $str = trim($str);
 
-        return $string;
+        return $str;
     }
 
-    private static function strip($string)
+    private static function strip($str)
     {
-        $string = filter_var($string, FILTER_SANITIZE_STRING);
+        return filter_var($str, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
+    }
 
-        return $string;
+    private static function email($str)
+    {
+        return filter_var($str, FILTER_SANITIZE_EMAIL);
+    }
+
+    private static function url($str)
+    {
+        return filter_var($str, FILTER_SANITIZE_URL);
     }
 }

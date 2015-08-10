@@ -28,17 +28,12 @@ trait FilterableFormRequest
 
     protected function formRequestFilter()
     {
-        try
-        {
-            $this->replace(
-                Filters::filtering(
-                    $this->all(),
-                    $this->filters()
-                )
-            );
-        }
-        catch (Exception $e) {
-        }
+        $this->replace(
+            Filters::filtering(
+                $this->all(),
+                $this->filters()
+            )
+        );
 
         return true;
     }
