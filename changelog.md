@@ -1,6 +1,12 @@
 # CHANGELOG
 
 
+2.1.1
+-----
+
+- "strip" alias was not a good idea
+
+
 2.1.0
 -----
 

@@ -150,3 +150,13 @@ Il est également possible de déclarer un filtre dans une closure :
 
 //...
 ```
+
+## Filtres disponibles
+
+'trim' : pour supprimer les espaces superflus
+
+'stripped' ou 'sanitize_string' : pour supprimer le code potentiellement dangereux
+
+'url' ou 'sanitize_url' : pour avoir une belle URL au poil brillant
+
+'email' ou 'sanitize_email': pareil pour une adresse email

@@ -57,11 +57,16 @@ class Filters
             case 'trim':
                 return static::trim($str);
 
-            case 'strip':
-            case 'stripped': // BC
+            case 'stripped':
+            case 'sanitize_string':
                 return static::strip($str);
 
             case 'url':
+            case 'sanitize_url':
+                return static::url($str);
+
+            case 'email':
+            case 'sanitize_email':
                 return static::url($str);
         }
     }
@@ -69,6 +74,7 @@ class Filters
     private static function trim($str)
     {
         $str = str_replace('&nbsp;', ' ', $str);
+        $str = preg_replace('/\s+/', ' ', $str);
         $str = trim($str);
 
         return $str;
