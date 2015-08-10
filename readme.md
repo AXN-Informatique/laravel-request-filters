@@ -1,6 +1,6 @@
-# Laravel Request Sanitizer
+# Laravel Request Filters
 
-Permet de nettoyer les données entrantes.
+Permet de filtrer les données entrantes.
 
 Par exemple lorsqu'elles sont passées par un content editable et dans lesquelles on retrouvent un peu de n'importe quoi mis par le navigateur...
 
@@ -11,7 +11,7 @@ Requérir ce paquet dans votre composer.json :
 
 ```
     "require" : {
-        "axn/laravel-request-sanitizer" : "~1.0"
+        "axn/laravel-request-filters" : "~1.0"
     }
 ```
 
@@ -20,7 +20,7 @@ Ajouter le dépôt privé à votre composer.json :
 ```
     "repositories" : [{
             "type" : "vcs",
-            "url" : "git@bitbucket.org:axn/laravel-request-sanitizer.git"
+            "url" : "git@bitbucket.org:axn/laravel-request-filters.git"
         }
     ]
 ```
@@ -34,21 +34,21 @@ composer update
 
 ## Utilisation
 
-Globalement deux choses à faire : définir les règles de nettoyage, appeller le trait dans la FormRequest
+Globalement deux choses à faire : définir les filtres à appliquer, appeller le trait dans la FormRequest
 
 ```php
 <?php
 
 namespace App\Http\Requests;
 
-use Axn\RequestSanitizer\FilterableFormRequest;
+use Axn\RequestFilters\FilterableFormRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
 class MyRequest extends FormRequest
 {
     use FilterableFormRequest;
 
-    protected $sanitizes = [
+    protected $filters = [
         'name' => 'stripped|trim'
     ];
 
@@ -65,7 +65,7 @@ Il est possible de passer les noms des filtres à appliquer dans un tableau :
 <?php
 //...
 
-    protected $sanitizes = [
+    protected $filters = [
         'name' => [
             'stripped',
             'trim'
@@ -81,7 +81,7 @@ Vous pouvez utiliser n'importe quel chaine de caractère qui représente une fon
 <?php
 //...
 
-    protected $sanitizes = [
+    protected $filters = [
         'name' => 'stripped|trim|strtolower|ucwords'
     ];
 
@@ -95,7 +95,7 @@ Pour rappel, un callable peut être une méthode d'une classe utilisateur :
 <?php
 //...
 
-    protected $sanitizes = [
+    protected $filters = [
         'name' => [
             'stripped',
             'trim',

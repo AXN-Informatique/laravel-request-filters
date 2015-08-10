@@ -1,15 +1,15 @@
 <?php
 
-namespace Axn\RequestSanitizer;
+namespace Axn\RequestFilters;
 
-class Sanitizer
+class Filters
 {
     private static $builtInFilters = [
         'trim',
         'stripped'
     ];
 
-    public static function sanitize(array $rules, array $input)
+    public static function filtering(array $rules, array $input)
     {
         foreach ($rules as $attribute => $filters)
         {

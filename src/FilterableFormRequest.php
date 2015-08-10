@@ -1,10 +1,10 @@
 <?php
 
-namespace Axn\RequestSanitizer;
+namespace Axn\RequestFilters;
 
 trait FilterableFormRequest
 {
-    protected $sanitizes = [];
+    protected $filters = [];
 
     /**
      * Get the validator instance for the request.
@@ -23,8 +23,8 @@ trait FilterableFormRequest
         try
         {
             $this->replace(
-                Sanitizer::sanitize(
-                    $this->sanitizes,
+                Filters::filtering(
+                    $this->filters,
                     $this->all()
                 )
             );
