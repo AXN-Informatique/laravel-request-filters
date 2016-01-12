@@ -1,12 +1,14 @@
 {
-    "name" : "axn/laravel-request-filters",
-    "minimum-stability" : "stable",
-    "require" : {
-        "illuminate/support" : "~5.0"
-    },
-    "autoload" : {
-        "psr-4" : {
-            "Axn\\RequestFilters\\" : "src/"
-        }
-    }
+	"name" : "axn/laravel-request-filters",
+	"minimum-stability" : "stable",
+	"require" : {
+		"illuminate/support" : "~5.0"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"Axn\\RequestFilters\\" : "src/"
+		}
+	},
+	"description" : "Filtres pour les form request de Laravel 5",
+	"homepage" : "https://bitbucket.org/axn/laravel-request-filters"
 }

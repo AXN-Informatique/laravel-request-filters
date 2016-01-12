@@ -1,6 +1,12 @@
 # CHANGELOG
 
 
+2.1.2
+-----
+
+- Complétion composer.json
+
+
 2.1.1
 -----
 
