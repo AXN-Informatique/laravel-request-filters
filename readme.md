@@ -6,31 +6,11 @@ Par exemple lorsqu'elles sont passées par un content editable et dans lesquelle
 
 
 ## Installation
-
-Requérir ce paquet dans votre composer.json :
-
-```
-    "require" : {
-        "axn/laravel-request-filters" : "~1.0"
-    }
-```
-
-Ajouter le dépôt privé à votre composer.json :
+Inclure le package avec Composer :
 
 ```
-    "repositories" : [{
-            "type" : "vcs",
-            "url" : "git@bitbucket.org:axn/laravel-request-filters.git"
-        }
-    ]
+composer require axn/laravel-request-filters
 ```
-
-Vous aurez besoin d'une clé SSH pour exécuter la commande suivante :
-
-```
-composer update
-```
-
 
 ## Utilisation
 
