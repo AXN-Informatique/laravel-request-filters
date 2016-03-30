@@ -6,9 +6,13 @@ class Filters
 {
     private static $builtInFilters = [
         'trim',
+        'strip',
         'stripped',
+        'sanitize_string',
         'url',
-        'email'
+        'sanitize_url',
+        'email',
+        'sanitize_email',
     ];
 
     /**
@@ -59,6 +63,7 @@ class Filters
             case 'trim':
                 return static::trim($str);
 
+            case 'strip':
             case 'stripped':
             case 'sanitize_string':
                 return static::strip($str);
@@ -75,9 +80,12 @@ class Filters
 
     private static function trim($str)
     {
-        $str = str_replace('&nbsp;', ' ', $str);
-        $str = preg_replace('/\s+/', ' ', $str);
-        $str = trim($str);
+        do {
+            $str = preg_replace('/^&nbsp;/', '', $str);
+            $str = preg_replace('/&nbsp;$/', '', $str);
+            $str = trim($str);
+        }
+        while (strpos($str, '&nbsp;') === 0 || mb_substr($str, -6) === '&nbsp;');
 
         return $str;
     }

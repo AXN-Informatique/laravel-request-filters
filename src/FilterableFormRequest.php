@@ -37,15 +37,9 @@ trait FilterableFormRequest
 
     public function validate()
     {
-        $instance = $this->getValidatorInstance();
-
         $this->applyFiltersBeforeValidation();
 
-        if (! $this->passesAuthorization()) {
-            $this->failedAuthorization();
-        } elseif (! $instance->passes()) {
-            $this->failedValidation($instance);
-        }
+        parent::validate();
 
         $this->applyFiltersAfterValidation();
     }
