@@ -1,6 +1,6 @@
 # Laravel Request Filters
 
-Permet de filtrer les données entrantes.
+Permet de filtrer les données entrantes des FormRequest.
 
 Par exemple lorsqu'elles sont passées par un content editable et dans lesquelles on retrouvent un peu de n'importe quoi mis par le navigateur...
 
@@ -14,7 +14,10 @@ composer require axn/laravel-request-filters
 
 ## Utilisation
 
-Globalement deux choses à faire : définir les filtres à appliquer, appeller le trait dans la FormRequest
+Globalement deux choses à faire :
+
+- appeller le trait dans la FormRequest
+- définir les filtres à appliquer avant et/ou après validation
 
 ```php
 <?php
@@ -28,10 +31,17 @@ class MyRequest extends FormRequest
 {
     use FilterableFormRequest;
 
-    public function filters()
+    public function filtersBeforeValidation()
     {
         return [
-            'name' => 'stripped|trim'
+            'name' => 'stripped'
+        ];
+    }
+
+    public function filtersAfterValidation()
+    {
+        return [
+            'name' => 'trim'
         ];
     }
     //...
@@ -39,7 +49,7 @@ class MyRequest extends FormRequest
 
 ```
 
-Les données seront automatiquement filtrées juste avant d'être validées.
+Les données passeront alors automatiquement dans les filtres.
 
 Il est possible de passer les noms des filtres à appliquer dans un tableau :
 
@@ -47,7 +57,7 @@ Il est possible de passer les noms des filtres à appliquer dans un tableau :
 <?php
 //...
 
-    public function filters()
+    public function filtersBeforeValidation()
     {
         return [
             'name' => [
@@ -60,13 +70,13 @@ Il est possible de passer les noms des filtres à appliquer dans un tableau :
 //...
 ```
 
-Vous pouvez utiliser n'importe quel chaine de caractère qui représente une fonction de rappel (callable) :
+Vous pouvez utiliser n'importe quelle chaine de caractère qui représente une fonction de rappel (callable) :
 
 ```php
 <?php
 //...
 
-    public function filters()
+    public function filtersBeforeValidation()
     {
         return [
             'name' => 'stripped|trim|strtolower|ucwords'
@@ -84,7 +94,7 @@ Pour rappel, un callable peut être une méthode d'une classe utilisateur :
 <?php
 //...
 
-    public function filters()
+    public function filtersBeforeValidation()
     {
         return [
             'name' => [
@@ -115,7 +125,7 @@ Il est également possible de déclarer un filtre dans une closure :
 <?php
 //...
 
-    public function filters()
+    public function filtersBeforeValidation()
     {
         return [
             'name' => [

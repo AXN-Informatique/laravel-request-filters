@@ -5,8 +5,29 @@ namespace Axn\RequestFilters;
 trait FilterableFormRequest
 {
     /**
+     * Get the filters that apply to the request before the validation.
+     *
+     * @return array
+     */
+    public function filtersBeforeValidation()
+    {
+        return [];
+    }
+
+    /**
+     * Get the filters that apply to the request after the validation.
+     *
+     * @return array
+     */
+    public function filtersAfterValidation()
+    {
+        return [];
+    }
+
+    /**
      * Get the filters that apply to the request.
      *
+     * @deprecated Since 2.2.0, will be removed in 3.0.0
      * @return array
      */
     public function filters()
@@ -14,27 +35,38 @@ trait FilterableFormRequest
         return [];
     }
 
-    /**
-     * Get the validator instance for the request.
-     *
-     * @return \Illuminate\Validation\Validator
-     */
-    protected function getValidatorInstance()
+    public function validate()
     {
-        $this->formRequestFilter();
+        $instance = $this->getValidatorInstance();
 
-        return parent::getValidatorInstance();
+        $this->applyFiltersBeforeValidation();
+
+        if (! $this->passesAuthorization()) {
+            $this->failedAuthorization();
+        } elseif (! $instance->passes()) {
+            $this->failedValidation($instance);
+        }
+
+        $this->applyFiltersAfterValidation();
     }
 
-    protected function formRequestFilter()
+    protected function applyFiltersBeforeValidation()
     {
         $this->replace(
             Filters::filtering(
                 $this->all(),
-                $this->filters()
+                array_merge($this->filtersBeforeValidation(), $this->filters()) // back compat for filters method
             )
         );
+    }
 
-        return true;
+    protected function applyFiltersAfterValidation()
+    {
+        $this->replace(
+            Filters::filtering(
+                $this->all(),
+                $this->filtersAfterValidation()
+            )
+        );
     }
 }

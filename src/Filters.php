@@ -6,7 +6,9 @@ class Filters
 {
     private static $builtInFilters = [
         'trim',
-        'stripped'
+        'stripped',
+        'url',
+        'email'
     ];
 
     /**
@@ -67,7 +69,7 @@ class Filters
 
             case 'email':
             case 'sanitize_email':
-                return static::url($str);
+                return static::email($str);
         }
     }
 
@@ -85,13 +87,13 @@ class Filters
         return filter_var($str, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES);
     }
 
-    private static function email($str)
-    {
-        return filter_var($str, FILTER_SANITIZE_EMAIL);
-    }
-
     private static function url($str)
     {
         return filter_var($str, FILTER_SANITIZE_URL);
+    }
+
+    private static function email($str)
+    {
+        return filter_var($str, FILTER_SANITIZE_EMAIL);
     }
 }

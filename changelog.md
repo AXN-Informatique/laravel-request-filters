@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+2.2.0
+-----
+
+- Add filtersBeforeValidation() and filtersAfterValidation() methods
+- Deprecate filters() method
+- Really implement "url" and "email" filters
+
 2.1.3
 -----
 
