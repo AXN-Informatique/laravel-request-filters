@@ -1,23 +1,27 @@
-# Laravel Request Filters
+Laravel Request Filters
+=======================
 
 Permet de filtrer les données entrantes des FormRequest.
 
 Par exemple lorsqu'elles sont passées par un content editable et dans lesquelles on retrouvent un peu de n'importe quoi mis par le navigateur...
 
 
-## Installation
+Installation
+------------
+
 Inclure le package avec Composer :
 
 ```
 composer require axn/laravel-request-filters
 ```
 
-## Utilisation
+Utilisation
+-----------
 
 Globalement deux choses à faire :
 
 - appeller le trait dans la FormRequest
-- définir les filtres à appliquer avant et/ou après validation
+- définir la liste des filtres à appliquer dans une méthode filters()
 
 ```php
 <?php
@@ -31,17 +35,10 @@ class MyRequest extends FormRequest
 {
     use FilterableFormRequest;
 
-    public function filtersBeforeValidation()
+    public function filters()
     {
         return [
-            'name' => 'stripped'
-        ];
-    }
-
-    public function filtersAfterValidation()
-    {
-        return [
-            'name' => 'trim'
+            'name' => 'stripped|trim'
         ];
     }
     //...
@@ -49,7 +46,10 @@ class MyRequest extends FormRequest
 
 ```
 
-Les données passeront alors automatiquement dans les filtres.
+Les données passeront alors automatiquement dans les filtres juste avant d'êtres validées.
+
+La méthode filters() doit retourner un tableaux. Les clés de ce tableau étant les noms des champs de la requête,
+et les valeurs les nom des filtres à appliquer.
 
 Il est possible de passer les noms des filtres à appliquer dans un tableau :
 
@@ -57,7 +57,7 @@ Il est possible de passer les noms des filtres à appliquer dans un tableau :
 <?php
 //...
 
-    public function filtersBeforeValidation()
+    public function filters()
     {
         return [
             'name' => [
@@ -76,7 +76,7 @@ Vous pouvez utiliser n'importe quelle chaine de caractère qui représente une f
 <?php
 //...
 
-    public function filtersBeforeValidation()
+    public function filters()
     {
         return [
             'name' => 'stripped|trim|strtolower|ucwords'
@@ -94,7 +94,7 @@ Pour rappel, un callable peut être une méthode d'une classe utilisateur :
 <?php
 //...
 
-    public function filtersBeforeValidation()
+    public function filters()
     {
         return [
             'name' => [
@@ -125,7 +125,7 @@ Il est également possible de déclarer un filtre dans une closure :
 <?php
 //...
 
-    public function filtersBeforeValidation()
+    public function filters()
     {
         return [
             'name' => [
@@ -141,12 +141,38 @@ Il est également possible de déclarer un filtre dans une closure :
 //...
 ```
 
-## Filtres disponibles
+Filtres disponibles
+-------------------
 
-'trim' : pour supprimer les espaces superflus
+### `trim`
 
-'stripped' ou 'sanitize_string' : pour supprimer le code potentiellement dangereux
+Pour supprimer les espaces superflus de chaques côtés de la chaine de caractère
 
-'url' ou 'sanitize_url' : pour avoir une belle URL au poil brillant
+Note : y compris la(les) chaine(s) "&nbsp;"
 
-'email' ou 'sanitize_email': pareil pour une adresse email
+### `strip`
+
+Alias : `stripped` ou `sanitize_string`
+
+Pour supprimer le code potentiellement dangereux.
+
+En fait, passe la chaine de caractère dans :
+`filter_var($str, FILTER_SANITIZE_STRING, FILTER_FLAG_NO_ENCODE_QUOTES)`
+
+### `url`
+
+Alias : `sanitize_url`
+
+Supprime tous les caractères qui ne devraient pas se trouver dans une URL.
+
+En fait, passe la chaine de caractère dans :
+`filter_var($str, FILTER_SANITIZE_URL)`
+
+### `email`
+
+Alias : `sanitize_email`
+
+Supprime tous les caractères qui ne devraient pas se trouver dans une adresse email.
+
+En fait, passe la chaine de caractère dans :
+`filter_var($str, FILTER_SANITIZE_EMAIL)`
