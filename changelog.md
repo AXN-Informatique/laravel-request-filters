@@ -5,6 +5,8 @@ CHANGELOG
 -----
 
 - Really implement "url" and "email" filters
+- Apply filter in validate() method instead of getValidator() method
+- Rewrite trim built-in filter
 
 2.1.3
 -----
