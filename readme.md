@@ -11,7 +11,7 @@ Installation
 
 Inclure le package avec Composer :
 
-```
+```sh
 composer require axn/laravel-request-filters
 ```
 

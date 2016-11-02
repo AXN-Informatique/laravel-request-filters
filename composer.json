@@ -1,9 +1,9 @@
 {
     "name" : "axn/laravel-request-filters",
-    "description" : "Filtres pour les form request de Laravel 5",
-    "homepage" : "https://bitbucket.org/axn/laravel-request-filters",
+    "description" : "Laravel forms requests filters",
+    "homepage" : "https://github.com/AXN-Informatique/laravel-request-filters",
     "support" : {
-        "issues" : "https://bitbucket.org/axn/laravel-request-filters/issues?status=new&status=open"
+        "issues" : "https://github.com/AXN-Informatique/laravel-request-filters/issues"
     },
     "authors" : [{
             "name" : "AXN Informatique",
