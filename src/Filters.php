@@ -42,7 +42,7 @@ class Filters
                 elseif (is_callable($filter)) {
                     $input[$attribute] = call_user_func($filter, $input[$attribute]);
                 }
-                elseif ($filter instanceof Closure) {
+                elseif ($filter instanceof \Closure) {
                     $input[$attribute] = $filter($input[$attribute]);
                 }
             }

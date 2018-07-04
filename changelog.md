@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+2.2.0 (2018-07-04)
+------------------
+
+- Add Laravel 5.6.* support
+- Rewrite Laravel requirements constraints
+
 2.1.5 (2016-11-02)
 ------------------
 
