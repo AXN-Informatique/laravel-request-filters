@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+2.6.1 (2020-05-17)
+------------------
+
+- Rename validate to validateResolved method call
+
 2.6.0 (2020-03-05)
 ------------------
 

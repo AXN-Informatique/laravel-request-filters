@@ -9,11 +9,11 @@ trait FilterableFormRequest
         return [];
     }
 
-    public function validate()
+    public function validateResolved()
     {
         $this->applyFilters();
 
-        parent::validate();
+        parent::validateResolved();
     }
 
     protected function applyFilters()
