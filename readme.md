@@ -1,3 +1,5 @@
+Ce package **est abandonné** à la faveur de [\Illuminate\Foundation\Http\FormRequest::prepareForValidation()](https://laravel.com/docs/master/validation#prepare-input-for-validation)
+
 Laravel Request Filters
 =======================
 
